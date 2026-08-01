@@ -30,8 +30,19 @@ export default function DeviceDetail() {
                 </p>
               </Card>
               <Card className= "flex h-10 items-center justify-center">
-                <p>Severity: <span className={`${getSeverityColor(device.severity)}/10 text px-2 py-1 rounded-md `}>{device.severity}</span>
-                  
+                <p>
+                  Severity: {" "}
+                  <Badge
+                    color={
+                      device.severity === "Critical"
+                        ? "red"
+                        : device.severity === "Warning"
+                        ? "yellow"
+                        : "green"
+                    }
+                  >
+                    {device.severity}
+                  </Badge>
                 </p>
               </Card>
             </div>
