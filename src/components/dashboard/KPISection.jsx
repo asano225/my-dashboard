@@ -18,7 +18,7 @@ export default function KPISection() {
         <p className="text-white text-sm">{item.title}</p>
 
         <h2
-          className="text-3xl font-bold"
+          className="text-4xl font-bold"
           style={{ color: item.color }}
         >
           {item.value}

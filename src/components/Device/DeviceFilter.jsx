@@ -41,10 +41,10 @@ export default function DeviceFilter() {
       </div>
 
       <div className="flex gap-2 pt-2">
-        <button className="flex-1 bg-blue-600 py-2 rounded-md">
+        <button className="flex-1 bg-blue-600 py-2 rounded-md cursor-pointer hover:bg-[rgb(49,113,255)]">
           Apply
         </button>
-        <button className="flex-1 bg-gray-700 py-2 rounded-md">
+        <button className="flex-1 bg-gray-700 py-2 rounded-md cursor-pointer hover:bg-[#4d5766]">
           Reset
         </button>
       </div>

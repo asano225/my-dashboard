@@ -23,7 +23,11 @@ export const dummyData = [
       network: {
         download: 5,
         upload: 2,
-        traffic: [5, 4, 6, 7, 5, 3, 4, 5, 6],
+        traffic:{
+          download: [5, 4, 6, 7, 5, 3, 4, 5, 6],
+          upload: [4, 3, 8, 6, 4, 5, 7, 6, 5],
+        },
+        
       },
 
       storage: {
@@ -59,7 +63,11 @@ export const dummyData = [
       network: {
         download: 25,
         upload: 18,
-        traffic: [20, 22, 25, 30, 27, 24, 26, 28, 30],
+        traffic:{
+          download: [20, 22, 25, 30, 27, 24, 26, 28, 30],
+          upload: [30, 28, 22, 25, 24, 35, 27, 26, 25],
+        },
+        
       },
 
       storage: {
@@ -95,7 +103,11 @@ export const dummyData = [
       network: {
         download: 10,
         upload: 15,
-        traffic: [10, 9, 12, 15, 8, 5, 9, 10, 12],
+        traffic: {
+          download: [10, 9, 12, 15, 8, 5, 9, 10, 12],
+          upload: [14, 13, 18, 16, 14, 15, 17, 16, 15],
+        },
+        
       },
 
       storage: {
