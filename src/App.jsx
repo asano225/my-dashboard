@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Topbar from "@/components/layout/Topbar";
-import DashboardPage from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard";
 import DevicePage from "./pages/Device";
 import Sidebar from "./components/layout/Sidebar";
 import DeviceDetail from "./pages/DetailDevice";
+import Alerts from "./pages/Alerts";
 
 export default function App() {
   return (
@@ -17,9 +18,10 @@ export default function App() {
 
           <div className="flex-1">
             <Routes>
-              <Route path="/" element={<DashboardPage />} />
+              <Route path="/" element={<Dashboard />} />
               <Route path="/device" element={<DevicePage />} />
               <Route path="/device/:id" element={<DeviceDetail />} />
+              <Route path="/alerts" element={<Alerts />} />
             </Routes>
           </div>
 

@@ -19,7 +19,7 @@ export default function Sidebar() {
           to="/device"
           icon={<Network size={18} />}
           label="Device"
-          active={location.pathname === "/device"}
+          active={location.pathname.startsWith("/device")}
         />
 
         <SidebarItem

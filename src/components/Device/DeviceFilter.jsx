@@ -7,6 +7,7 @@ export default function DeviceFilter() {
       <div className="flex justify-between items-center">
         <label className="text-gray-400">Status :</label>
         <select className="text-black w-38 mt-1 bg-[#ffffff] p-2 rounded-md">
+          <option>All status</option>
           <option>Available</option>
           <option>Unavailable</option>
         </select>
@@ -15,6 +16,7 @@ export default function DeviceFilter() {
       <div className="flex justify-between items-center">
         <label className="text-gray-400">Severity :</label>
         <select className="text-black w-38 mt-1 bg-[#ffffff] p-2 rounded-md">
+          <option>All severity</option>
           <option>Warning</option>
           <option>Critical</option>
           <option>Health</option>
@@ -24,6 +26,7 @@ export default function DeviceFilter() {
       <div className="flex justify-between items-center">
         <label className="text-gray-400">Group :</label>
         <select className="text-black w-38 mt-1 bg-[#ffffff] p-2 rounded-md">
+          <option>All group</option>
           <option>WJS</option>
         </select>
       </div>
