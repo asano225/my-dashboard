@@ -13,7 +13,10 @@ export default function KPISection() {
       {data.map((item, i) => (
       <Card 
         key={i}
-        style={{ borderColor: item.color }}
+        style={{ 
+          borderColor: item.color,
+          backgroundColor: `${item.color}1A`
+        }}
       >
         <p className="text-white text-sm">{item.title}</p>
 

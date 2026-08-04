@@ -11,7 +11,7 @@ export default function AlertsTable() {
     <Card>
       <h3 className="text-white mb-4 font-semibold">Recent Alerts</h3>
 
-      <table className="w-full text-left text-sm">
+      <table className="w-full text-left text-sm font-mono">
         <thead className="text-gray-400">
           <tr>
             <th>Device</th>

@@ -2,7 +2,9 @@ export const dummyData = [
   {
     id: 1,
     host: "user",
+    dev: "PC",
     ip: "192.168.204.204",
+    group: "Mandalika",
     severity: "Critical",
     problem: 1,
     status: "Unavailable",
@@ -42,7 +44,9 @@ export const dummyData = [
   {
     id: 2,
     host: "server",
+    dev: "server",
     ip: "192.168.204.1",
+    group: "server",
     severity: "Warning",
     problem: 2,
     status: "Available",
@@ -82,7 +86,9 @@ export const dummyData = [
   {
     id: 3,
     host: "user",
+    dev: "PC",
     ip: "192.168.204.20",
+    group: "Jasa",
     severity: "Health",
     problem: "-",
     status: "Available",

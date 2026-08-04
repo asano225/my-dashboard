@@ -1,8 +1,8 @@
 export default function AlertFilters() {
   return (
-    <div className="bg-[#1a1a1a] p-4 rounded-lg mb-4 flex flex-wrap gap-3 items-center">
+    <div className="bg-[#1a1a1a] p-4 rounded-lg mb-4 grid grid-cols-1 md:grid-cols-[1fr_auto_auto_auto_auto] gap-3 items-center">
       <input
-        className="bg-[#111] border border-gray-700 px-3 py-2 rounded w-64"
+        className="flex-1 min-w-50 bg-[#111] border border-gray-700 px-3 py-2 rounded"
         placeholder="Search device / IP..."
       />
 

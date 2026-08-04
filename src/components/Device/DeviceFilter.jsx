@@ -1,8 +1,11 @@
-export default function DeviceFilter() {
+export default function DeviceFilter({ onClose }) {
   return (
-    <div className="w-64 bg-[#1e1e1e] p-4 rounded-lg border border-[#444] space-y-4">
-
-      <h2 className="text-gray-200 font-semibold">Filter</h2>
+    <div className="h-full w-64 bg-[#1e1e1e] p-4 border border-[#444] space-y-4">
+      <div className="flex justify-between items-center">
+        <h2 className="text-gray-200 font-semibold">Filter</h2>
+        <button onClick={onClose} className="text-gray-400">✕</button>
+      </div>
+      
 
       <div className="flex justify-between items-center">
         <label className="text-gray-400">Status :</label>

@@ -9,7 +9,9 @@ export default function DeviceTable() {
         <thead className="bg-[#2a2a2a] text-gray-400 text-xs">
           <tr>
             <th className="p-2">Host</th>
+            <th className="p-2">Device</th>
             <th className="p-2">IP Address</th>
+            <th className="p-2">Group</th>
             <th className="p-2">Severity</th>
             <th className="p-2">Problem</th>
             <th className="p-2">Status</th>
@@ -24,7 +26,9 @@ export default function DeviceTable() {
               className="border-t border-[#333] hover:bg-[#2a2a2a] cursor-pointer transition active:scale-[0.99]"
             >
               <td className="p-2">{item.host}</td>
+              <td className="p-2">{item.dev}</td>
               <td className="p-2">{item.ip}</td>
+              <td className="p-2">{item.group}</td>
 
               <td className="p-2 flex items-center gap-2">
                 <span

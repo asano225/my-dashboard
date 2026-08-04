@@ -52,7 +52,7 @@ export default function TrafficChart() {
       </h3>
 
       {/* Chart container */}
-      <div className="flex-1">
+      <div className="flex-1 font-mono">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart 
             data={data}
