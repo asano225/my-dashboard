@@ -10,14 +10,32 @@ export default function Alerts() {
   const [alerts] = useState(dummyAlerts);
   const [selectedAlert, setSelectedAlert] = useState(null);
 
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [sevFilter, setSevFilter] = useState("All");
+
+  const filteredAlerts = alerts.filter((item) => {
+  const statusMatch =
+    statusFilter === "All" || item.status === statusFilter;
+
+  const sevMatch =
+    sevFilter === "All" || item.severity === sevFilter;
+
+  return statusMatch && sevMatch;
+});
+
   return (
     <div className=" bg-[#0f0f0f] min-h-screen text-white">
 
-      <AlertFilters />
+      <AlertFilters
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
+        sevFilter={sevFilter}
+        setSevFilter={setSevFilter}
+      />
 
       <AlertSummary alerts={alerts} />
 
-      <AlertTable alerts={alerts} onSelect={setSelectedAlert} />
+      <AlertTable alerts={filteredAlerts} onSelect={setSelectedAlert} />
 
       <AlertDrawer
         alert={selectedAlert}

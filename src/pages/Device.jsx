@@ -1,20 +1,70 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import DeviceSearch from "../components/device/DeviceSearch";
 import DeviceTable from "../components/device/DeviceTable";
 import DeviceFilter from "../components/device/DeviceFilter";
+import { dummyData } from "../data/dummyDevice";
 
 export default function DevicePage() {
   const [open, setOpen] = useState(false);
 
+  const [filters, setFilters] = useState({
+    status: "All",
+    severity: "All",
+    group: "All",
+    tags: [],
+  });
+
+  const [appliedFilters, setAppliedFilters] = useState(filters);
+
+  const handleApply = (newFilters) => {
+    console.log("FILTERS SAAT APPLY:", filters);
+    setAppliedFilters(newFilters || filters);
+    setOpen(false);
+  };
+
+  const data = dummyData;
+
+  const uniqueTags = useMemo(
+    () => [...new Set(data.map(item => item.dev.toLowerCase()))],
+    [data]
+  );
+
+  const groupOptions = useMemo(
+    () => [...new Set(data.map(item => item.group))],
+    [data]
+  );
+
+  console.log("APPLIED:", appliedFilters);
+
+  const filteredData = data.filter((item) => {
+    const statusMatch =
+      appliedFilters.status === "All" ||
+      item.status === appliedFilters.status;
+
+    const severityMatch =
+      appliedFilters.severity === "All" ||
+      item.severity === appliedFilters.severity;
+
+    const groupMatch =
+      appliedFilters.group === "All" ||
+      item.group === appliedFilters.group;
+
+    const tagMatch =
+      appliedFilters.tags.length === 0 ||
+      appliedFilters.tags.includes(item.dev.toLowerCase());
+
+      console.log("APPLIED FILTERS:", appliedFilters);
+
+    return statusMatch && severityMatch && groupMatch && tagMatch;
+  });
+
   return (
     <div className="flex gap-4 p-4 bg-[#121212] min-h-screen text-sm text-gray-300">
-      
       <div className="flex-1 space-y-4">
         <DeviceSearch onOpenFilter={() => setOpen(true)} />
-        <DeviceTable />
+        <DeviceTable data={filteredData} />
       </div>
 
-      {/* Overlay */}
       {open && (
         <div
           className="fixed inset-0 bg-black/50 z-40"
@@ -22,14 +72,23 @@ export default function DevicePage() {
         />
       )}
 
-      {/* Drawer */}
       <div
         className={`fixed top-0 right-0 h-full z-50 transform transition-transform duration-300 ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <DeviceFilter onClose={() => setOpen(false)} />
+        <DeviceFilter
+          onClose={() => setOpen(false)}
+          filters={filters}
+          setFilters={setFilters}
+          onApply={handleApply}
+          tagOptions={uniqueTags}
+          groupOptions={groupOptions}
+        />
       </div>
     </div>
   );
+
+  
 }
+

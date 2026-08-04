@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { dummyData, getSeverityColor } from "../../data/dummyDevice";
+import { getSeverityColor } from "../../data/dummyDevice";
 
-export default function DeviceTable() {
+export default function DeviceTable({ data }) {
   const navigate = useNavigate();
+  console.log("DATA DI TABLE:", data);
   return (
     <div className="bg-[#1e1e1e] rounded-lg border border-[#444] overflow-hidden">
       <table className="font-mono w-full text-left">
@@ -19,7 +20,7 @@ export default function DeviceTable() {
         </thead>
 
         <tbody>
-          {dummyData.map((item) => (
+          {data.map((item) => (
             <tr
               key={item.id}
               onClick={() => navigate(`/device/${item.id}`)}
