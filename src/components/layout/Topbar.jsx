@@ -8,10 +8,16 @@ export default function Topbar() {
 
   // cari menu yang cocok
   const currentMenu = menuItems.find(item => {
-    if (item.path === "/") return location.pathname === "/";
+    if (item.path === "/") {
+      return location.pathname === "/";
+    }
 
-    if (item.path === "/device/:id") {
-      return location.pathname.startsWith("/device/");
+    if (item.path === "/devices/:id/edit") {
+      return /^\/devices\/[^/]+\/edit$/.test(location.pathname);
+    }
+
+    if (item.path === "/devices/:id") {
+      return /^\/devices\/[^/]+$/.test(location.pathname);
     }
 
     return location.pathname.startsWith(item.path);

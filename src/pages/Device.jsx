@@ -1,10 +1,12 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import DeviceSearch from "../components/device/DeviceSearch";
 import DeviceTable from "../components/device/DeviceTable";
 import DeviceFilter from "../components/device/DeviceFilter";
-import { dummyData } from "../data/dummyDevice";
 
-export default function DevicePage() {
+export default function DevicePage( {data, setDevices} ) {
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
 
   const [filters, setFilters] = useState({
@@ -22,7 +24,13 @@ export default function DevicePage() {
     setOpen(false);
   };
 
-  const data = dummyData;
+
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm("Yakin mau hapus device ini?");
+    if (!confirmDelete) return;
+
+    setDevices((prev) => prev.filter((d) => d.id !== id));
+  };
 
   const uniqueTags = useMemo(
     () => [...new Set(data.map(item => item.dev.toLowerCase()))],
@@ -30,11 +38,9 @@ export default function DevicePage() {
   );
 
   const groupOptions = useMemo(
-    () => [...new Set(data.map(item => item.group))],
+    () => [...new Set((data || []).map(item => item.group))],
     [data]
   );
-
-  console.log("APPLIED:", appliedFilters);
 
   const filteredData = data.filter((item) => {
     const statusMatch =
@@ -62,7 +68,20 @@ export default function DevicePage() {
     <div className="flex gap-4 p-4 bg-[#121212] min-h-screen text-sm text-gray-300">
       <div className="flex-1 space-y-4">
         <DeviceSearch onOpenFilter={() => setOpen(true)} />
-        <DeviceTable data={filteredData} />
+        <div className="flex">
+          <button
+          className="bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-500 text-white cursor-pointer"
+          onClick={() => navigate("/devices/new")}
+        >
+          + Add Device
+        </button>
+        </div>
+        
+         
+        <DeviceTable 
+          data={filteredData} 
+          onDelete={handleDelete}
+        />
       </div>
 
       {open && (

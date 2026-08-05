@@ -5,7 +5,7 @@ export default function Sidebar() {
   const location = useLocation();
 
   return (
-    <aside className="w-64 bg-[#1e1e1e] border-r border-[#444] min-h-screen p-4">
+    <aside className="w-61 bg-[#1e1e1e] border-r border-[#444] min-h-screen p-4">
       <nav className="space-y-2">
 
         <SidebarItem
@@ -16,10 +16,10 @@ export default function Sidebar() {
         />
 
         <SidebarItem
-          to="/device"
+          to="/devices"
           icon={<Network size={18} />}
-          label="Device"
-          active={location.pathname.startsWith("/device")}
+          label="Devices"
+          active={location.pathname.startsWith("/devices")}
         />
 
         <SidebarItem
