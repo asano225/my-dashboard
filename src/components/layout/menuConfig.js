@@ -23,4 +23,8 @@ export const menuItems = [
     path: "/alerts",
     label: "Alerts",
   },
+  {
+    path: "/reports",
+    label: "Reports & Analytics",
+  },
 ];

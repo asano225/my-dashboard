@@ -6,6 +6,7 @@ import Sidebar from "./components/layout/Sidebar";
 import DeviceDetail from "./pages/DetailDevice";
 import Alerts from "./pages/Alerts";
 import DeviceForm from "./pages/DeviceForm";
+import Reports from "./pages/Reports";
 import { dummyData } from "./data/dummyDevice";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -43,6 +44,8 @@ export default function App() {
               <Route path="/devices" element={<DevicePage data={devices} setDevices={setDevices} />} />
               
               <Route path="/alerts" element={<Alerts />} />
+
+              <Route path="/reports" element={<Reports />} />
             </Routes>
           </div>
 

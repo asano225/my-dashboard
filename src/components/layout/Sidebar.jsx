@@ -23,17 +23,17 @@ export default function Sidebar() {
         />
 
         <SidebarItem
-          to="/resources"
-          icon={<Server size={18} />}
-          label="Resources"
-          active={location.pathname === "/resources"}
-        />
-
-        <SidebarItem
           to="/alerts"
           icon={<AlertTriangle size={18} />}
           label="Alerts"
           active={location.pathname === "/alerts"}
+        />
+
+        <SidebarItem
+          to="/reports"
+          icon={<Server size={18} />}
+          label="Reports & Analytics"
+          active={location.pathname === "/reports"}
         />
 
       </nav>

@@ -24,7 +24,7 @@ export default function Alerts() {
 });
 
   return (
-    <div className=" bg-[#0f0f0f] min-h-screen text-white">
+    <div className=" bg-[#121212] min-h-screen text-white">
 
       <AlertFilters
         statusFilter={statusFilter}

@@ -9,7 +9,7 @@ export default function KPISection() {
 ];
 
   return (
-    <div className="bg-[#1e1e1e] border border-[#444444] rounded-lg p-2 backdrop-blur grid lg:grid-cols-4 md:grid-cols-2 gap-2">
+    <div className="p-2 backdrop-blur grid lg:grid-cols-4 md:grid-cols-2 gap-2">
       {data.map((item, i) => (
       <Card 
         key={i}

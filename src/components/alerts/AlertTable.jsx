@@ -1,6 +1,9 @@
+
+
 export default function AlertTable({ alerts, onSelect }) {
   return (
-    <div className="bg-[#1a1a1a] rounded-lg overflow-hidden">
+    <div className="p-3">
+      <div className="overflow-hidden border border-[#444444] rounded-md">
       <table className="w-full text-left font-mono">
         <thead className="bg-[#111] text-gray-400">
           <tr>
@@ -16,7 +19,7 @@ export default function AlertTable({ alerts, onSelect }) {
           {alerts.map((a) =>{
             const rowColor =
               a.severity === "Critical"
-                ? "bg-red-900/20"
+                ? "bg-red-900/20" 
                 : a.severity === "Warning"
                 ? "bg-yellow-900/10"
                 : "";
@@ -47,6 +50,8 @@ export default function AlertTable({ alerts, onSelect }) {
         </tbody>
       </table>
     </div>
+    </div>
+    
   );
 }
 
