@@ -2,33 +2,58 @@ import ReportHeader from "../components/report/ReportHeader";
 import ReportSummary from "../components/report/ReportSummary";
 import ReportChart from "../components/report/ReportChart";
 import TopDevices from "../components/report/TopDevice";
+import { useState } from "react";
+import { mockData } from "../data/mockData";
 
 export default function Reports() {
+  const [selectedTime, setSelectedTime] = useState("7d");
+  const [selectedDevice, setSelectedDevice] = useState("all");
+
+  const data = mockData[selectedTime]?.[selectedDevice] || {
+    resource: [],
+    network: [],
+    alerts: []
+  };
+
+
   return (
     <div className="bg-[#121212] p-6 space-y-6 min-h-screen text-white">
       
-      <ReportHeader />
+      <ReportHeader
+        selectedTime={selectedTime}
+        setSelectedTime={setSelectedTime}
+        selectedDevice={selectedDevice}
+        setSelectedDevice={setSelectedDevice}
+      />
 
       <ReportSummary />
 
-      <ReportChart 
-        title="Resource Usage Over Time"
-        subtitle="CPU & RAM usage"
-      >
-        Chart CPU & RAM
-      </ReportChart>
+      <ReportChart
+        title="CPU & RAM Usage"
+        data={data.resource}
+        lines={[
+          { dataKey: "cpu", color: "#3B82F6" },
+          { dataKey: "ram", color: "#10B981" },
+        ]}
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <ReportChart 
+        <ReportChart
           title="Network Traffic"
-        >
-          Network Chart
-        </ReportChart>
-        <ReportChart 
-          title="Alerts Distribution"
-        >
-          Alert Chart
-        </ReportChart>
+          data={data.network}
+          lines={[
+            { dataKey: "in", color: "#6366F1" },
+            { dataKey: "out", color: "#F59E0B" },
+          ]}
+        />
+        <ReportChart
+          title="Alerts Over Time"
+          data={data.alerts}
+          lines={[
+            { dataKey: "warning", color: "#FBBF24" },
+            { dataKey: "critical", color: "#EF4444" },
+          ]}
+        />
       </div>
 
       <TopDevices />

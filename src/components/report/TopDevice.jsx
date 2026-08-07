@@ -12,12 +12,12 @@ export default function TopDevices() {
         Top Problematic Devices
       </h2>
 
-      <table className="w-full text-sm">
+      <table className="w-full text-sm font-mono text-left">
         <thead className="text-gray-400">
           <tr>
-            <th className="text-left">Device</th>
-            <th className="text-left">Alerts</th>
-            <th className="text-left">Status</th>
+            <th>Device</th>
+            <th>Alerts</th>
+            <th>Status</th>
           </tr>
         </thead>
 
