@@ -15,6 +15,21 @@ export default function Reports() {
     alerts: []
   };
 
+  const topDevices = Object.entries(mockData[selectedTime]).map(
+  ([name, deviceData]) => {
+    const totalAlerts = deviceData.alerts.reduce(
+      (sum, d) => sum + d.critical + d.warning,
+      0
+    );
+
+    return {
+      name,
+      alerts: totalAlerts,
+      status: totalAlerts > 20 ? "Critical" : "Warning"
+    };
+  }
+).sort((a, b) => b.alerts - a.alerts);
+
 
   return (
     <div className="bg-[#121212] p-6 space-y-6 min-h-screen text-white">
@@ -26,7 +41,7 @@ export default function Reports() {
         setSelectedDevice={setSelectedDevice}
       />
 
-      <ReportSummary />
+      <ReportSummary data={ data }/>
 
       <ReportChart
         title="CPU & RAM Usage"
@@ -56,7 +71,7 @@ export default function Reports() {
         />
       </div>
 
-      <TopDevices />
+      <TopDevices devices={topDevices} />
 
     </div>
   );

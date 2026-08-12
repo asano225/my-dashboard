@@ -78,8 +78,8 @@ export default function DevicePage( {data, setDevices} ) {
         </div>
         
          
-        <DeviceTable 
-          data={filteredData} 
+        <DeviceTable
+          data={filteredData}
           onDelete={handleDelete}
         />
       </div>

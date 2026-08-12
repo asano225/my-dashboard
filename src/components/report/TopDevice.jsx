@@ -1,11 +1,7 @@
 import Card from "../ui/Card";
 
-const devices = [
-  { name: "Server A", alerts: 12, status: "Critical" },
-  { name: "Router B", alerts: 8, status: "Warning" },
-];
-
-export default function TopDevices() {
+export default function TopDevices({ devices }) {
+  
   return (
     <Card className="p-4">
       <h2 className="text-lg font-semibold mb-4">
@@ -22,8 +18,8 @@ export default function TopDevices() {
         </thead>
 
         <tbody>
-          {devices.map((d, i) => (
-            <tr key={i} className="border-t border-gray-700">
+          {devices.map((d) => (
+            <tr key={d.name} className="border-t border-gray-700">
               <td className="py-2">{d.name}</td>
               <td>{d.alerts}</td>
               <td>{d.status}</td>

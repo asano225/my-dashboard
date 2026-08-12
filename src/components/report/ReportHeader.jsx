@@ -15,7 +15,7 @@ export default function ReportHeader({
 
       <div className="flex gap-2">
         <select
-          className="bg-[#111827] text-sm px-3 py-2 rounded-lg"
+          className="bg-[#eeeeee] text-sm px-3 py-2 rounded-md text-black"
           value={selectedTime}
           onChange={(e) => setSelectedTime(e.target.value)}
         >
@@ -24,7 +24,7 @@ export default function ReportHeader({
         </select>
 
         <select
-          className="bg-[#111827] text-sm px-3 py-2 rounded-lg"
+          className="bg-[#eeeeee] text-sm px-3 py-2 rounded-md text-black"
           value={selectedDevice}
           onChange={(e) => setSelectedDevice(e.target.value)}
         >
