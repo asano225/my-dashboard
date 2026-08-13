@@ -21,7 +21,6 @@ export default function GeneralSettings({ settings, setSettings }) {
       </div>
 
       <div className="space-y-5">
-
         {/* Timezone */}
         <div>
           <label className="mb-2 block text-sm font-medium text-slate-300">
@@ -70,18 +69,6 @@ export default function GeneralSettings({ settings, setSettings }) {
           <label className="mb-2 block text-sm font-medium text-slate-300">
             Refresh Interval
           </label>
-
-          <select
-            name="refreshInterval"
-            value={settings.refreshInterval}
-            onChange={handleChange}
-            className="w-full rounded-lg border border-[#444444] bg-[#151515] px-4 py-2.5 text-sm text-white outline-none focus:border-blue-500"
-          >
-            <option value={15}>15 seconds</option>
-            <option value={30}>30 seconds</option>
-            <option value={60}>1 minute</option>
-            <option value={300}>5 minutes</option>
-          </select>
         </div>
       </div>
     </section>
