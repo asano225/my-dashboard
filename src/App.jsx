@@ -1,4 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { dummyData } from "./data/dummyDevice";
+import { useState } from "react";
+import { useEffect } from "react";
 import Topbar from "@/components/layout/Topbar";
 import Dashboard from "./pages/Dashboard";
 import DevicePage from "./pages/Device";
@@ -7,9 +10,7 @@ import DeviceDetail from "./pages/DetailDevice";
 import Alerts from "./pages/Alerts";
 import DeviceForm from "./pages/DeviceForm";
 import Reports from "./pages/Reports";
-import { dummyData } from "./data/dummyDevice";
-import { useState } from "react";
-import { useEffect } from "react";
+import SettingsPage from "./pages/Settings";
 
 export default function App() {
   const [devices, setDevices] = useState( () => {
@@ -46,6 +47,8 @@ export default function App() {
               <Route path="/alerts" element={<Alerts />} />
 
               <Route path="/reports" element={<Reports />} />
+
+              <Route path="/settings" element={<SettingsPage />} />
             </Routes>
           </div>
 

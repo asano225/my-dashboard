@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, Network, Server, AlertTriangle } from "lucide-react";
+import { LayoutDashboard, Network, Server, AlertTriangle, Settings } from "lucide-react";
 
 export default function Sidebar() {
   const location = useLocation();
@@ -34,6 +34,13 @@ export default function Sidebar() {
           icon={<Server size={18} />}
           label="Reports & Analytics"
           active={location.pathname === "/reports"}
+        />
+
+        <SidebarItem
+          to="/settings"
+          icon={<Settings size={18} />}
+          label="Settings"
+          active={location.pathname === "/settings"}
         />
 
       </nav>

@@ -27,4 +27,8 @@ export const menuItems = [
     path: "/reports",
     label: "Reports & Analytics",
   },
+  {
+    path: "/settings",
+    label: "Settings",
+  },
 ];
