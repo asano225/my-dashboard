@@ -4,8 +4,11 @@ import ReportChart from "../components/report/ReportChart";
 import TopDevices from "../components/report/TopDevice";
 import { useState } from "react";
 import { mockData } from "../data/mockData";
+import EmptyState from "../components/EmptyState/EmptyState";
+import LoadingState from "../components/EmptyState/LoadingState";
+import ErrorState from "../components/EmptyState/ErrorState";
 
-export default function Reports() {
+export default function Reports({ loading, error }) {
   const [selectedTime, setSelectedTime] = useState("7d");
   const [selectedDevice, setSelectedDevice] = useState("all");
 
@@ -16,19 +19,36 @@ export default function Reports() {
   };
 
   const topDevices = Object.entries(mockData[selectedTime]).map(
-  ([name, deviceData]) => {
-    const totalAlerts = deviceData.alerts.reduce(
-      (sum, d) => sum + d.critical + d.warning,
-      0
-    );
+    ([name, deviceData]) => {
+      const totalAlerts = deviceData.alerts.reduce(
+        (sum, d) => sum + d.critical + d.warning,
+        0
+      );
 
-    return {
-      name,
-      alerts: totalAlerts,
-      status: totalAlerts > 20 ? "Critical" : "Warning"
-    };
-  }
-).sort((a, b) => b.alerts - a.alerts);
+      return {
+        name,
+        alerts: totalAlerts,
+        status: totalAlerts > 20 ? "Critical" : "Warning"
+      };
+    }
+  ).sort((a, b) => b.alerts - a.alerts);
+
+  const isEmpty =
+    data.resource.length === 0 &&
+    data.network.length === 0 &&
+    data.alerts.length === 0;
+
+  if (loading) return <LoadingState />;
+
+  if (error) return <ErrorState message="Failed to load report data" />;
+
+  if (isEmpty)
+    return (
+      <EmptyState
+        title="No report data found"
+        description="There is no data available for the selected time and device."
+      />
+    );
 
 
   return (
@@ -68,6 +88,8 @@ export default function Reports() {
             { dataKey: "warning", color: "#FBBF24" },
             { dataKey: "critical", color: "#EF4444" },
           ]}
+          emptyTitle="No alerts found"
+          emptyDescription="There are no alerts for the selected period and device."
         />
       </div>
 

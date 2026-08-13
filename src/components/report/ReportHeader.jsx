@@ -19,8 +19,9 @@ export default function ReportHeader({
           value={selectedTime}
           onChange={(e) => setSelectedTime(e.target.value)}
         >
-          <option value="7d">Last 7 days</option>
           <option value="1d">Last 1 days</option>
+          <option value="7d">Last 7 days</option>
+          <option value="30d">Last 30 days</option>
         </select>
 
         <select

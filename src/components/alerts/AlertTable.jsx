@@ -1,6 +1,20 @@
+import EmptyState from "../EmptyState/EmptyState";
+import LoadingState from "../EmptyState/LoadingState";
+import ErrorState from "../EmptyState/ErrorState";
 
+export default function AlertTable({ loading, error, alerts, onSelect }) {
+  if (loading) return <LoadingState />;
 
-export default function AlertTable({ alerts, onSelect }) {
+  if (error) return <ErrorState message="Failed to load alerts" />;
+
+  if (!alerts || alerts.length === 0)
+    return (
+      <EmptyState
+        title="No alerts found"
+        description="No alerts match your filters."
+      />
+    );
+
   return (
     <div className="p-3">
       <div className="overflow-hidden border border-[#444444] rounded-md">

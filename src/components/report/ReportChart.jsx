@@ -9,12 +9,15 @@ import {
   Legend,
 } from "recharts";
 import Card from "../ui/Card";
+import EmptyState from "../EmptyState/EmptyState";
 
 const ReportChart = ({
   title,
   data = [],
   lines = [],
   dataKeyX = "time",
+  emptyTitle = "No data available",
+  emptyDescription = "There is no data available for this chart."
 }) => {
   return (
     <Card className="p-4 shadow-md">
@@ -23,52 +26,62 @@ const ReportChart = ({
         <h2 className="text-white text-lg font-semibold">{title}</h2>
       </div>
 
-      {/* Chart */}
-      <div className="w-full h-75">
-        <ResponsiveContainer>
-          <LineChart
-            data={data}
-            margin={{ top: 5, right: 10, left: -32, bottom: -5 }}
-          >
-            <CartesianGrid stroke="#1f2937" strokeDasharray="3 3" />
-
-            <XAxis
-              dataKey={dataKeyX}
-              stroke="#9ca3af"
-              tick={{ fill: "#9ca3af", fontSize: 12 }}
-            />
-
-            <YAxis
-              stroke="#9ca3af"
-              tick={{ fill: "#9ca3af", fontSize: 12 }}
-            />
-
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "#020617",
-                border: "1px solid #1f2937",
-                borderRadius: "8px",
-                color: "#fff",
-              }}
-            />
-
-            <Legend />
-
-            {/* 🔥 Dynamic Lines */}
-            {lines.map((line, index) => (
-              <Line
-                key={index}
-                type="monotone"
-                dataKey={line.dataKey}
-                stroke={line.color}
-                strokeWidth={2}
-                dot={false}
-                name={line.name}
+      {/* Empty State */}
+      {!data || data.length === 0 ? (
+        <EmptyState
+          title={emptyTitle}
+          description={emptyDescription}
+        />
+      ) : (
+        /* Chart */
+        <div className="w-full h-75">
+          <ResponsiveContainer>
+            <LineChart
+              data={data}
+              margin={{ top: 5, right: 10, left: -32, bottom: -5 }}
+            >
+              <CartesianGrid
+                stroke="#1f2937"
+                strokeDasharray="3 3"
               />
-            ))}
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+
+              <XAxis
+                dataKey={dataKeyX}
+                stroke="#9ca3af"
+                tick={{ fill: "#9ca3af", fontSize: 12 }}
+              />
+
+              <YAxis
+                stroke="#9ca3af"
+                tick={{ fill: "#9ca3af", fontSize: 12 }}
+              />
+
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#020617",
+                  border: "1px solid #1f2937",
+                  borderRadius: "8px",
+                  color: "#fff",
+                }}
+              />
+
+              <Legend />
+
+              {lines.map((line, index) => (
+                <Line
+                  key={index}
+                  type="monotone"
+                  dataKey={line.dataKey}
+                  stroke={line.color}
+                  strokeWidth={2}
+                  dot={false}
+                  name={line.name}
+                />
+              ))}
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
     </Card>
   );
 };

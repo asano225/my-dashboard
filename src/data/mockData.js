@@ -86,7 +86,7 @@ export const mockData = {
     "server-a": {
       resource: resource1dServerA,
       network: network1dServerA,
-      alerts: alerts1dServerA
+      alerts: []
     },
     "router-b": {
       resource: resource1dServerA.map(d => ({
@@ -95,12 +95,13 @@ export const mockData = {
         ram: d.ram * 0.6
       })),
       network: network1dServerA,
-      alerts: alerts1dServerA
+      alerts: []
     },
     "all": {
       resource: resource1dServerA,
       network: network1dServerA,
-      alerts: alerts1dServerA
+      alerts: []
     }
-  }
+  },
+  "30d": {}
 }
