@@ -8,7 +8,12 @@ import SystemSettings from "../components/settings/SystemSettings";
 const defaultSettings = {
   timezone: "Asia/Jakarta",
   language: "English",
-  refreshInterval: 30,
+
+  pollingInterval: 30,
+  cpuThreshold: 80,
+  ramThreshold: 80,
+  diskThreshold: 90,
+  deviceDownTimeout: 60,
 };
 
 export default function SettingsPage() {
@@ -16,7 +21,9 @@ export default function SettingsPage() {
     try {
       const saved = localStorage.getItem("settings");
 
-      return saved ? JSON.parse(saved) : defaultSettings;
+      return saved
+        ? { ...defaultSettings, ...JSON.parse(saved) }
+        : defaultSettings;
     } catch {
       return defaultSettings;
     }
@@ -52,8 +59,10 @@ export default function SettingsPage() {
         setSettings={setSettings}
       />
 
-      {/* Monitoring */}
-      <MonitoringSettings />
+      <MonitoringSettings
+        settings={settings}
+        setSettings={setSettings}
+      />
 
       {/* Notifications */}
       <NotificationSettings />
