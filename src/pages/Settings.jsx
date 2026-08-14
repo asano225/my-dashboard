@@ -2,7 +2,6 @@ import { useState } from "react";
 import GeneralSettings from "../components/settings/GeneralSettings";
 import MonitoringSettings from "../components/settings/MonitoringSettings";
 import NotificationSettings from "../components/settings/NotificationSettings";
-import AppearanceSettings from "../components/settings/AppearanceSettings"
 import SystemSettings from "../components/settings/SystemSettings";
 import { defaultSettings } from "../config/settingsConfig";
 
@@ -74,12 +73,6 @@ export default function SettingsPage() {
 
         {/* Notifications */}
         <NotificationSettings
-          settings={settings}
-          setSettings={setSettings}
-        />
-
-        {/* Appearance */}
-        <AppearanceSettings
           settings={settings}
           setSettings={setSettings}
         />
