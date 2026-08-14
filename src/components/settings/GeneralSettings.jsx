@@ -9,7 +9,7 @@ export default function GeneralSettings({ settings, setSettings }) {
   };
 
   return (
-    <div className="m-3">
+    <div className="m-3 mb-6">
       <div className="mb-6 gap-3 text-left">
         <h2 className="text-lg font-semibold text-white">
           General Settings
@@ -24,7 +24,7 @@ export default function GeneralSettings({ settings, setSettings }) {
         <div className="space-y-5">
           {/* Timezone */}
           <div className="flex items-center gap-3">
-            <label className="mb-2 block text-md font-medium text-slate-300">
+            <label className="mb-2 text-left block text-md font-medium text-slate-300 w-[15%]">
               Timezone
             </label>
 
@@ -50,7 +50,7 @@ export default function GeneralSettings({ settings, setSettings }) {
 
           {/* Language */}
           <div className="flex items-center gap-3">
-            <label className="mb-2 block text-md font-medium text-slate-300">
+            <label className="mb-2 block text-left text-md font-medium text-slate-300 w-[15%]">
               Language
             </label>
 

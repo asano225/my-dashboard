@@ -4,17 +4,8 @@ import MonitoringSettings from "../components/settings/MonitoringSettings";
 import NotificationSettings from "../components/settings/NotificationSettings";
 import AppearanceSettings from "../components/settings/AppearanceSettings"
 import SystemSettings from "../components/settings/SystemSettings";
+import { defaultSettings } from "../config/settingsConfig";
 
-const defaultSettings = {
-  timezone: "Asia/Jakarta",
-  language: "English",
-
-  pollingInterval: 30,
-  cpuThreshold: 80,
-  ramThreshold: 80,
-  diskThreshold: 90,
-  deviceDownTimeout: 60,
-};
 
 export default function SettingsPage() {
   const [savedSettings, setSavedSettings] = useState(() => {
@@ -44,6 +35,22 @@ export default function SettingsPage() {
     setSettings(savedSettings);
   };
 
+  const handleReset = () => {
+  const confirmed = window.confirm(
+    "Are you sure you want to reset all settings to their default values?"
+  );
+
+  if (!confirmed) return;
+
+  setSettings(defaultSettings);
+  setSavedSettings(defaultSettings);
+
+  localStorage.setItem(
+    "settings",
+    JSON.stringify(defaultSettings)
+  );
+};
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -53,27 +60,39 @@ export default function SettingsPage() {
         </p>
       </div>
 
-      {/* General */}
-      <GeneralSettings
-        settings={settings}
-        setSettings={setSettings}
-      />
+      <div>
+        {/* General */}
+        <GeneralSettings
+          settings={settings}
+          setSettings={setSettings}
+        />
 
-      <MonitoringSettings
-        settings={settings}
-        setSettings={setSettings}
-      />
+        <MonitoringSettings
+          settings={settings}
+          setSettings={setSettings}
+        />
 
-      {/* Notifications */}
-      <NotificationSettings />
+        {/* Notifications */}
+        <NotificationSettings
+          settings={settings}
+          setSettings={setSettings}
+        />
 
-      {/* Appearance */}
-      <AppearanceSettings />
+        {/* Appearance */}
+        <AppearanceSettings
+          settings={settings}
+          setSettings={setSettings}
+        />
 
-      {/* System */}
-      <SystemSettings />
+        {/* System */}
+        <SystemSettings
+          onReset={handleReset}
+        />
+      </div>
 
-      <div className="flex justify-end gap-3">
+      
+
+      <div className="flex justify-end gap-3 p-6">
         
         <button
           type="button"
