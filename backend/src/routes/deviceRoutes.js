@@ -1,6 +1,7 @@
 const express = require("express");
 const pool = require("../config/database");
 const crypto = require("crypto");
+const net = require("net");
 
 const router = express.Router();
 
@@ -59,6 +60,52 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+function validateDevice(data) {
+  const errors = {};
+
+  const { host, dev, ip, group, severity, status } = data;
+
+  // Host
+  if (!host || host.trim() === "") {
+    errors.host = "Host is required";
+  }
+
+  // Device type
+  if (!dev || dev.trim() === "") {
+    errors.dev = "Device type is required";
+  }
+
+  // IP address
+  if (!ip || ip.trim() === "") {
+    errors.ip = "IP address is required";
+  } else if (!net.isIPv4(ip)) {
+    errors.ip = "IP address must be a valid IPv4 address";
+  }
+
+  // Device group
+  if (!group || group.trim() === "") {
+    errors.group = "Device group is required";
+  }
+
+  // Severity
+  if (
+    severity !== undefined &&
+    !["normal", "warning", "critical"].includes(severity)
+  ) {
+    errors.severity = "Invalid severity";
+  }
+
+  // Status
+  if (
+    status !== undefined &&
+    !["online", "offline", "unknown"].includes(status)
+  ) {
+    errors.status = "Invalid status";
+  }
+
+  return errors;
+}
+
 // POST /api/devices
 router.post("/", async (req, res) => {
   let connection;
@@ -72,6 +119,15 @@ router.post("/", async (req, res) => {
       severity,
       status,
     } = req.body;
+
+    const errors = validateDevice(req.body);
+
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({
+        message: "Validation failed",
+        errors,
+      });
+    }
 
     const id = crypto.randomUUID();
 
