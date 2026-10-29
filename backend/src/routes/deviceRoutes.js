@@ -35,6 +35,12 @@ router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (!validateUUID(id)) {
+      return res.status(400).json({
+        message: "Invalid device ID",
+      });
+    }
+
     connection = await pool.getConnection();
 
     const devices = await connection.query(
@@ -106,6 +112,13 @@ function validateDevice(data) {
   return errors;
 }
 
+function validateUUID(id) {
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+  return uuidRegex.test(id);
+}
+
 // POST /api/devices
 router.post("/", async (req, res) => {
   let connection;
@@ -161,14 +174,20 @@ router.post("/", async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error creating device:", error);
+      console.error("Error creating device:", error);
 
-    res.status(500).json({
-      message: "Failed to create device",
-    });
-  } finally {
-    if (connection) connection.release();
-  }
+      if (error.code === "ER_DUP_ENTRY") {
+        return res.status(409).json({
+          message: "Device with this IP address already exists",
+        });
+      }
+
+      res.status(500).json({
+        message: "Failed to create device",
+      });
+    } finally {
+        if (connection) connection.release();
+      }
 });
 
 // PUT /api/devices/:id
@@ -178,6 +197,12 @@ router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (!validateUUID(id)) {
+      return res.status(400).json({
+        message: "Invalid device ID",
+      });
+    }
+
     const {
       host,
       dev,
@@ -186,6 +211,15 @@ router.put("/:id", async (req, res) => {
       severity,
       status,
     } = req.body;
+
+    const errors = validateDevice(req.body);
+
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({
+        message: "Validation failed",
+        errors,
+      });
+    }
 
     connection = await pool.getConnection();
 
@@ -226,12 +260,18 @@ router.put("/:id", async (req, res) => {
       device: updatedDevice[0],
     });
   } catch (error) {
-    console.error("Error updating device:", error);
+      console.error("Error updating device:", error);
 
-    res.status(500).json({
-      message: "Failed to update device",
-    });
-  } finally {
+      if (error.code === "ER_DUP_ENTRY") {
+        return res.status(409).json({
+          message: "Device with this IP address already exists",
+        });
+      }
+
+      res.status(500).json({
+        message: "Failed to update device",
+      });
+    } finally {
     if (connection) connection.release();
   }
 });
@@ -241,6 +281,12 @@ router.delete("/:id", async (req, res) => {
 
   try {
     const { id } = req.params;
+
+    if (!validateUUID(id)) {
+      return res.status(400).json({
+        message: "Invalid device ID",
+      });
+    }
 
     connection = await pool.getConnection();
 

@@ -1,12 +1,14 @@
 import { useParams } from "react-router-dom";
-import { dummyData } from "../../data/dummyDevice";
 import { MiniChart, PieChartCard } from "../Device/MiniCHart";
+import { useMonitoring } from "../../context/MonitoringContext";
 
-export default function DeviceChart() {
+export default function DeviceChart({ device: propDevice }) {
   const { id } = useParams();
-  const device = dummyData.find(d => d.id === Number(id));
+  const { devices } = useMonitoring();
 
-  if (!device) return <p>Not found</p>;
+  const device = propDevice || devices.find((d) => String(d.id) === String(id));
+
+  if (!device) return <p className="text-gray-400">Not found</p>;
 
   const detail = device.detail;
 
@@ -14,30 +16,36 @@ export default function DeviceChart() {
     return <p className="text-red-400">Detail data not available</p>;
   }
 
-  return(
+  const isNetworkOnly = device.mode === "real" || device.mode === "snmp";
+
+  return (
     <div className="grid md:grid-cols-2 grid-cols-1 gap-4 text-left">
       <StorageSection 
-        title="Storage"
+        title={isNetworkOnly ? "ICMP Packet Stability" : "Storage Usage"}
         detail={detail.storage}
+        isNetworkOnly={isNetworkOnly}
       />
       
       <DeviceCard
-        title="CPU"
+        title={isNetworkOnly ? "Network Latency History (ms)" : "CPU Utilization History (%)"}
+        value={isNetworkOnly ? `${device.latency || 2} ms` : `${detail.cpu.usage}%`}
         data={detail.cpu.history}
       />
 
       <DeviceCard
-        title="Memory"
+        title={isNetworkOnly ? "TCP Handshake Stability" : "Memory Utilization History (%)"}
+        value={isNetworkOnly ? (device.openPortStatus || "Stable") : `${detail.memory.usage}%`}
         data={detail.memory.history}
       />
 
       <DeviceCard
-        title="Network"
+        title="Network Throughput"
+        value={`${detail.network.download} Mbps DL / ${detail.network.upload} Mbps UL`}
         data={detail.network.traffic}
       />
     </div>
   );
-};
+}
 
 function DeviceCard({ title, value, data }) {
   return (
@@ -53,37 +61,43 @@ function DeviceCard({ title, value, data }) {
   );
 }
 
-function StorageSection({ title, detail }) {
+function StorageSection({ title, detail, isNetworkOnly }) {
   const used = detail?.used ?? 0;
-  const free = detail?.free ?? 0;
+  const free = detail?.free ?? 100;
 
-  const data = [
-    { name: "Used", value: used },
-    { name: "Free", value: free },
-  ];
+  const data = isNetworkOnly
+    ? [
+        { name: "Successful Packets", value: 98 },
+        { name: "Loss", value: 2 },
+      ]
+    : [
+        { name: "Used", value: used },
+        { name: "Free", value: free },
+      ];
 
   return (
     <div className="bg-[#1e1e1e] p-4 rounded-lg border border-[#444]">
       <h2 className="text-sm text-gray-400">{title}</h2>
 
-      <div className="flex items-center">
-        
+      <div className="flex items-center mt-2">
         <div className="flex-1">
           <div className="text-sm space-y-1">
-            <div className="font-semibold">Used: {used}%</div>
-            <div className="font-semibold">Free: {free}%</div>
+            <div className="font-semibold text-gray-200">
+              {isNetworkOnly ? "Delivery Rate: 98%" : `Used: ${used}%`}
+            </div>
+            <div className="font-semibold text-gray-400">
+              {isNetworkOnly ? "Packet Loss: 2%" : `Free: ${free}%`}
+            </div>
           </div>
         </div>
 
-        <div className="w-30 h-30">
+        <div className="w-28 h-28">
           <PieChartCard
             data={data}
-            colors={["#ff3131", "#00bf63"]}
+            colors={isNetworkOnly ? ["#00bf63", "#ff3131"] : ["#3b82f6", "#22c55e"]}
           />
         </div>
       </div>
     </div>
   );
 }
-
-      

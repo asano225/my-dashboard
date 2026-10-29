@@ -3,29 +3,27 @@ import AlertFilters from "../components/alerts/AlertFilters";
 import AlertSummary from "../components/alerts/AlertSummary";
 import AlertTable from "../components/alerts/AlertTable";
 import AlertDrawer from "../components/alerts/AlertDrawer";
-import { dummyAlerts } from "../data/dummyAlerts";
-
+import { useMonitoring } from "../context/MonitoringContext";
 
 export default function Alerts() {
-  const [alerts] = useState(dummyAlerts);
+  const { alerts, resolveAlert } = useMonitoring();
   const [selectedAlert, setSelectedAlert] = useState(null);
 
   const [statusFilter, setStatusFilter] = useState("All");
   const [sevFilter, setSevFilter] = useState("All");
 
   const filteredAlerts = alerts.filter((item) => {
-  const statusMatch =
-    statusFilter === "All" || item.status === statusFilter;
+    const statusMatch =
+      statusFilter === "All" || item.status === statusFilter;
 
-  const sevMatch =
-    sevFilter === "All" || item.severity === sevFilter;
+    const sevMatch =
+      sevFilter === "All" || item.severity === sevFilter;
 
-  return statusMatch && sevMatch;
-});
+    return statusMatch && sevMatch;
+  });
 
   return (
-    <div className=" bg-[#121212] min-h-screen text-white">
-
+    <div className="bg-[#121212] min-h-screen text-white">
       <AlertFilters
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
@@ -41,6 +39,7 @@ export default function Alerts() {
         alert={selectedAlert}
         open={!!selectedAlert}
         onClose={() => setSelectedAlert(null)}
+        onResolve={resolveAlert}
       />
     </div>
   );
